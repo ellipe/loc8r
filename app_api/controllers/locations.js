@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 var Loc = mongoose.model('Location');
 
+
 var sendJsonResponse = function(res, status, content) {
   res.status(status);
   res.json(content);
@@ -23,7 +24,6 @@ module.exports.locationsListByDistance = function (req, res) {
   var lng = parseFloat(req.query.lng);
   var lat = parseFloat(req.query.lat);
   var dist = parseFloat(req.query.dist);
-  console.log(dist);
   var point = {
     type: "Point",
     coordinates: [lng, lat]

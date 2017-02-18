@@ -47,7 +47,7 @@ var doSetAverageRating = function(location) {
     for (var i = 0; i < reviewCount; i++) {
       ratingTotal = ratingTotal + location.reviews[i].rating;
     }
-    ratingAverage = ParseInt(ratingTotal / reviewCount, 10);
+    ratingAverage = parseInt(ratingTotal / reviewCount, 10);
     location.rating = ratingAverage;
     location.save(function(err, location){
       if (err) {
