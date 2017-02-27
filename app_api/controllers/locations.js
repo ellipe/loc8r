@@ -21,9 +21,10 @@ var theEarth = (function(){
 }; })();
 
 module.exports.locationsListByDistance = function (req, res) {
+  
   var lng = parseFloat(req.query.lng);
   var lat = parseFloat(req.query.lat);
-  var dist = parseFloat(req.query.dist);
+  var dist = parseFloat(req.query.maxDistance);
   var point = {
     type: "Point",
     coordinates: [lng, lat]
@@ -41,6 +42,7 @@ module.exports.locationsListByDistance = function (req, res) {
     return;
   }
   Loc.geoNear(point, geoOptions, function(err, results, stats){
+    
     var locations = [];
     results.forEach(function(doc){
       locations.push({

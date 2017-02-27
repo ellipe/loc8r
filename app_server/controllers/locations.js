@@ -74,7 +74,8 @@ var renderReviewForm = function(req, res, locDetail) {
     pageHeader: {
       title: 'Review '+ locDetail.name
     },
-    error: req.query.err
+    error: req.query.err,
+    url: req.originalUrl
   });
 };
 
@@ -93,58 +94,21 @@ var renderDetailPage = function(req, res, responseBody){
 };
 
 
-var renderHomepage = function(req, res, responseBody){
-  var message;
-  if (!(Array.isArray(responseBody))) {
-    message = 'API lookup error',
-    responseBody = [];
-  }else {
-    if (!responseBody.length) {
-      message = 'No locations found nearby!'
-    }
-  }
+var renderHomepage = function(req, res){
   res.render('locations-list', {
-    title: 'Loc8r - find a place to work with wifi.',
+    title: 'Loc8r - find a place to work with wifi',
     pageHeader: {
       title: 'Loc8r',
       strapline: 'Find places to work with wifi near you!'
     },
-    sidebar : "Looking for wifi and a seat? Loc8r helps you find places to work when out and about. Perhaps with coffee, cake or a pint? Let Loc8r help you find the place you're looking for.",
-    locations : responseBody,
-    message: message
-  });
-}
-
+    sidebar: "Looking for wifi and a seat? Loc8r helps you find places to work when out and about. Perhaps with coffee, cake or a pint? Let Loc8r help you find the place you're looking for."
+   });
+};
 
 module.exports.homelist = function(req, res){
-  var requestOptions, path;
-  path = '/api/locations';
-  requestOptions = {
-    uri : apiOptions.server + path,
-    method : 'GET',
-    json : {},
-    qs : {
-      lng : '-0.963',
-      lat : '51.45',
-      dist : '20'
-    }
-  };
-
-  request(requestOptions,
-  function(err, response, body){
-    var i, data;
-    data = body;
-    if (response.statusCode === 200 && data.length) {
-      for (var i = 0; i < data.length; i++) {
-        data[i].distance = _formatDistance(data[i].distance)
-      }
-      renderHomepage(req, res, data);
-    }else {
-      _showError(req, res, response.statusCode);
-    }
-
-  });
+  renderHomepage(req, res);
 };
+
 
 /* GET 'Location info' page */
 module.exports.locationInfo = function(req, res){
@@ -192,3 +156,4 @@ module.exports.doAddReview = function(req, res){
     });
   }
 };
+
