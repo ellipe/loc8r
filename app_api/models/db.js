@@ -44,5 +44,6 @@ process.on('SIGTERM', function() {
   });
 });
 
-// Requires Schema for Locations
+// Requires Schema for Locations and Users
 require('./locations');
+require('./users');
