@@ -37,7 +37,7 @@
       						$location.path(vm.returnPage);
 						})
 						.catch(function(err){
-							vm.formError = err;
+							vm.formError = "Incorrect username or password, please try again!";
 						});
 						
 		};
